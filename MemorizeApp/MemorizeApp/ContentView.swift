@@ -19,23 +19,26 @@ struct ContentView: View { // ContentView "behaves like a" View
 }
 
 struct CardView: View {
-    var isFaceUp: Bool = false // Default value
+    @State var isFaceUp = false // Default value - Has to be a var
+    // @State creates a pointer!!
+    
     
     var body: some View {
-        ZStack(content: { // Tuple view
+        ZStack(alignment: .center, content: { // Tuple view
+            let cardBase =  RoundedRectangle(cornerRadius: 12) //Type Inference
+            //let cardBase: RoundedRectangle =  RoundedRectangle(cornerRadius: 12) // Lego blocks cornerRadius: Named parameter //let is constant
             if isFaceUp {
-                RoundedRectangle(cornerRadius: 12) // Lego blocks cornerRadius: Named parameter
-                    .foregroundColor(.white)
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(lineWidth: 10)
+                cardBase.fill(.white)
+                cardBase.strokeBorder(lineWidth: 10)
                 Text("👻").font(.largeTitle) // Text struct
             } else {
-                RoundedRectangle(cornerRadius: 12) // Lego blocks cornerRadius: Named parameter
-                    .foregroundColor(.orange)
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(lineWidth: 10)
+                cardBase.fill()
             }
         })
+        .onTapGesture {
+            // print("Tapped")
+            isFaceUp.toggle()
+        }
         
         .foregroundColor(.orange)
         .padding()
