@@ -8,10 +8,17 @@
 import SwiftUI
 
 struct ContentView: View { // ContentView "behaves like a" View
+    let emojis = ["👻", "🎃", "😈", "🕷️"] // "Inferred Array of String" emojis: Array<String>
+    
     var body: some View { // Computed Property - Lego analogy
         HStack {
-            CardView(isFaceUp: true)
-            CardView()
+            ForEach(emojis.indices, id: \.self) { emoji in
+                CardView(cardContent: emojis[emoji])
+            }
+/*            CardView(cardContent: "👻", isFaceUp: true)
+            CardView(cardContent: "🎃")
+            CardView(cardContent: "😈")
+            CardView(cardContent: "🕷️", isFaceUp: true) */
         }
         .foregroundColor(.orange)
         .padding()
@@ -19,7 +26,8 @@ struct ContentView: View { // ContentView "behaves like a" View
 }
 
 struct CardView: View {
-    @State var isFaceUp = false // Default value - Has to be a var
+    let cardContent: String
+    @State var isFaceUp = true // Default value - Has to be a var
     // @State creates a pointer!!
     
     
@@ -30,7 +38,7 @@ struct CardView: View {
             if isFaceUp {
                 cardBase.fill(.white)
                 cardBase.strokeBorder(lineWidth: 10)
-                Text("👻").font(.largeTitle) // Text struct
+                Text(cardContent).font(.largeTitle) // Text struct
             } else {
                 cardBase.fill()
             }
