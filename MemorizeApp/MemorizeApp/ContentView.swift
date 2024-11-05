@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ContentView: View { // ContentView "behaves like a" View
+   
+    var viewModel: EmojiMemoryGame // Don't call it viewModel. Only for instruction
+    
+    
     let emojis = ["👻", "🎃", "😈", "🕷️", "🤖", "👽", "👾"] // "Inferred Array of String" emojis: Array<String>
     
     @State var cardCount: Int = 4
