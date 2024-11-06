@@ -8,26 +8,30 @@
 import Foundation   // Model
 
 struct MemoryGame<CardContent>{ //Don't care type for CardContent
-    private(set) var cards: [Card] // Access controls
+    private(set) var cards: Array<Card> // Access controls
     
     init(numberOfPairsOfCards: Int, cardContentFactory: (Int) -> CardContent) { // Init all the vars
         cards = []
         // add numberOfPairsOfCards x 2 cards
-        for pairIndex in 0..<numberOfPairsOfCards { // Use _ since don't care
+        for pairIndex in 0..<max(2, numberOfPairsOfCards) { // Use _ since don't care
             let content = cardContentFactory(pairIndex)
             cards.append(Card(content: content))
-            cards.append(Card(content: content)) // Don't need to
+            cards.append(Card(content: content)) 
         }
     }
     
+    mutating func shuffle() {
+        cards.shuffle()
+        print(cards)
+    }
     
     func choose(card: Card) {
         
     }
     
     struct Card {
-        var isFaceUp = false
-        var isMatched: Bool = false
+        var isFaceUp = true
+        var isMatched: Bool = true
         let content: CardContent // Read only
         
     }
