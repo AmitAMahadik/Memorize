@@ -4,6 +4,10 @@
 //
 //  Created by Mahadik, Amit on 11/3/24.
 //
+//   VIEW
+//
+
+
 
 import SwiftUI
 
@@ -15,6 +19,7 @@ struct EmojiMemoryGameView: View { // ContentView "behaves like a" View
         VStack {
             ScrollView {
                 cards
+                    .animation(.default, value: viewModel.cards)
             }
             Button("Shuffle") {
                 viewModel.shuffle()
@@ -24,11 +29,14 @@ struct EmojiMemoryGameView: View { // ContentView "behaves like a" View
     }
     
     var cards: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 100), spacing: 0)], spacing: 0) {
-            ForEach(viewModel.cards.indices, id: \.self) { index in
-                CardView(viewModel.cards[index])
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 100), spacing: 0)], spacing: 0) { //id: \.self -> Needs card to be hashable
+            ForEach(viewModel.cards) { card in
+                CardView(card)
                     .aspectRatio(2/3, contentMode: .fit)
                     .padding(4)
+                    .onTapGesture {
+                        viewModel.choose(card)
+                    }
             }
         }
         .foregroundColor(Color.orange)
