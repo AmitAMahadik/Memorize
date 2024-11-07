@@ -67,9 +67,11 @@ struct CardView: View {
                 .opacity(card.isFaceUp ? 0 : 1)
             
         }
+        .opacity(card.isFaceUp  || !card.isMatched ? 1 : 0)
         .foregroundColor(.orange)
-        .padding()
+       // .padding()
     }
+        
 }
 
 #Preview {
