@@ -23,7 +23,38 @@ struct MemoryGame<CardContent> where CardContent: Equatable { //Don't care type 
         }
     }
     
-    var indexOfTheOnlyFaceUpCard: Int?
+    var indexOfTheOnlyFaceUpCard: Int? {
+        get { cards.indices.filter { index in cards[index].isFaceUp }.only}
+        set { cards.indices.forEach { cards[$0].isFaceUp = (newValue == $0)}}
+    }
+    
+    /*
+     var indexOfTheOnlyFaceUpCard: Int? {
+         get {
+             var faceUpCardIndices = [Int]()
+             for index in cards.indices {
+                 if cards[index].isFaceUp {
+                     faceUpCardIndices.append(index)
+                 }
+             }
+             if faceUpCardIndices.count == 1 {
+                 return faceUpCardIndices.first
+             } else {
+                 return nil
+             }
+             
+         }
+         set {
+             for index in cards.indices {
+                 if index == newValue {
+                     cards[index].isFaceUp = true
+                 } else {
+                     cards[index].isFaceUp = false
+                 }
+             }
+         }
+     }
+     */
     
     mutating func choose(card: Card) {
         if let chosenIndex = cards.firstIndex(where: {$0.id == card.id}) {
@@ -33,11 +64,11 @@ struct MemoryGame<CardContent> where CardContent: Equatable { //Don't care type 
                         cards[potentialMatchIndex].isMatched = true
                         cards[chosenIndex].isMatched = true
                     }
-                    indexOfTheOnlyFaceUpCard = nil
+                  //  indexOfTheOnlyFaceUpCard = nil
                 } else {
-                    for index in cards.indices {
+                 /*   for index in cards.indices {
                         cards[index].isFaceUp = false
-                    }
+                    } */
                     indexOfTheOnlyFaceUpCard = chosenIndex
                 }
                 cards[chosenIndex].isFaceUp = true
@@ -63,5 +94,11 @@ struct MemoryGame<CardContent> where CardContent: Equatable { //Don't care type 
         var debugDescription: String { // Make your debugging easier
             return "\(id): faceUp: \(isFaceUp ? "up" : "down"), matched: \(isMatched ? "matched" : "not matched"), content:\(content)"
         }
+    }
+}
+
+extension Array {
+    var only: Element? {
+        count == 1 ? first : nil
     }
 }
