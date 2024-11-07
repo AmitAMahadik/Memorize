@@ -28,8 +28,9 @@ struct EmojiMemoryGameView: View { // ContentView "behaves like a" View
         }
     }
     
+    @ViewBuilder
     var cards: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 100), spacing: 0)], spacing: 0) { //id: \.self -> Needs card to be hashable
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 85), spacing: 0)], spacing: 0) { //id: \.self -> Needs card to be hashable
             ForEach(viewModel.cards) { card in
                 CardView(card)
                     .aspectRatio(2/3, contentMode: .fit)
@@ -40,7 +41,9 @@ struct EmojiMemoryGameView: View { // ContentView "behaves like a" View
             }
         }
         .foregroundColor(Color.orange)
+        .padding()
     }
+        
     
 }
 
@@ -57,10 +60,13 @@ struct CardView: View {
             Group {
                 cardBase.fill(.white)
                 cardBase.strokeBorder(lineWidth: 4)
+                Pie(endAngle: .degrees(240))
+                    .opacity(0.3)
+                    .overlay(
                 Text(card.content)
                     .font(.system(size: 200)) // Text struct
                     .minimumScaleFactor(0.01)
-                    .aspectRatio(1, contentMode: .fit)
+                    .aspectRatio(1, contentMode: .fit))
             }
             .opacity(card.isFaceUp ? 1 : 0)
             cardBase.fill()
