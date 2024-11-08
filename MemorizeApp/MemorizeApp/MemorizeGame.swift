@@ -87,7 +87,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable { //Don't care type 
             return lhs.content == rhs.content && lhs.isFaceUp == rhs.isFaceUp && lhs.isMatched == rhs.isMatched
         } */ //Not needed since Equatable
         
-        var isFaceUp = false
+        var isFaceUp = true
         var isMatched: Bool = false
         let content: CardContent // Read only
         var id: String // For Pr Indentifiable

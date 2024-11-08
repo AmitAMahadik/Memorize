@@ -14,12 +14,10 @@ struct Cardify: ViewModifier {
         
         ZStack {
             let cardBase =  RoundedRectangle(cornerRadius: Constants.cornerRadius) //Type Inference
-            Group {
-                cardBase.fill(.white)
-                cardBase.strokeBorder(lineWidth: Constants.lineWidth)
-                content
-            }
-            .opacity(isFaceUp ? 1 : 0)
+            cardBase.strokeBorder(lineWidth: Constants.lineWidth)
+                .background(cardBase.fill(.white))
+                    .overlay(content)
+                    .opacity(isFaceUp ? 1 : 0)
             cardBase.fill()
                 .opacity(isFaceUp ? 0 : 1)
         }
@@ -30,4 +28,10 @@ struct Cardify: ViewModifier {
         static let lineWidth: CGFloat = 2
     }
     
+}
+
+extension View {
+    public func cardify(isFaceUp: Bool) -> some View {
+        modifier(Cardify(isFaceUp: isFaceUp))
+    }
 }

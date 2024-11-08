@@ -15,28 +15,18 @@ struct CardView: View {
     }
     
     var body: some View {
-        ZStack {
-            let cardBase =  RoundedRectangle(cornerRadius: Constants.cornerRadius) //Type Inference
-            Group {
-                cardBase.fill(.white)
-                cardBase.strokeBorder(lineWidth: Constants.lineWidth)
-                Pie(endAngle: .degrees(240))
-                    .opacity(0.3)
-                    .overlay(
+        Pie(endAngle: .degrees(240))
+            .opacity(0.3)
+            .overlay(
                 Text(card.content)
                     .font(.system(size: Constants.FontSize.largest)) // Text struct
                     .minimumScaleFactor(Constants.FontSize.scaleFactor)
-                    .aspectRatio(1, contentMode: .fit))
-            }
-            .opacity(card.isFaceUp ? 1 : 0)
-            cardBase.fill()
-                .opacity(card.isFaceUp ? 0 : 1)
-            
+                    .aspectRatio(1, contentMode: .fit)
+                )
+            .padding(Constants.inset)
+            .cardify(isFaceUp: card.isFaceUp)
+            .opacity(card.isFaceUp || card.isMatched ? 1 : 0)
         }
-        .opacity(card.isFaceUp  || !card.isMatched ? 1 : 0)
-        .foregroundColor(.orange)
-       // .padding()
-    }
     
     private struct Constants {
         static let cornerRadius: CGFloat = 12
