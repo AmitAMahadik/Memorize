@@ -4,7 +4,7 @@
 //
 //  Created by Mahadik, Amit on 11/4/24.
 //
-//
+//  VIEW MODEL
 //
 
 
@@ -27,7 +27,11 @@ class EmojiMemoryGame: ObservableObject {
     @Published private var model: MemoryGame<String> = createMemoryGame()
                                     
     var cards: Array<MemoryGame<String>.Card> {
-        return model.cards
+        model.cards
+    }
+    
+    var color: Color {
+        .red
     }
     
     // MARK: - Intents
