@@ -12,10 +12,11 @@
 import SwiftUI // View Model - needs SwiftUI to interface with UI, but no UI implementation
 
 class EmojiMemoryGame: ObservableObject {
-    private static let emojis = ["👻", "🎃", "☠️", "👽", "🤖", "👹", "👺", "👻", "🎃", "☠️", "👽", "🤖", "👹", "👺"]
+    typealias Card = MemoryGame<String>.Card
+    private static let emojis = ["👻", "🎃", "☠️", "👽", "🤖", "👹", "👺", "🦇","🧛","⚰️","🪄","🔮","🧿","🦄","🍭","🧙","🧌"]
     
    private static func createMemoryGame() -> MemoryGame<String> {
-       return MemoryGame(numberOfPairsOfCards: 2) { pairIndex in
+       return MemoryGame(numberOfPairsOfCards: 8) { pairIndex in
            if emojis.indices.contains(pairIndex) {
                return emojis[pairIndex]
            } else {
@@ -24,26 +25,23 @@ class EmojiMemoryGame: ObservableObject {
        }
     }
     
-    @Published private var model: MemoryGame<String> = createMemoryGame()
+    @Published private var model = createMemoryGame()
                                     
-    var cards: Array<MemoryGame<String>.Card> {
+    var cards: Array<Card> {
         model.cards
     }
     
     var color: Color {
-        .red
+        .orange
     }
     
     // MARK: - Intents
     func shuffle() { // Intent function
         model.shuffle()
-        objectWillChange.send()
+        //objectWillChange.send()
     }
     
-    func choose(_ card: MemoryGame<String>.Card) { // Intent function // _ External name is not needed
-        model.choose(card: card)
+    func choose(_ card: Card) { // Intent function // _ External name is not needed
+        model.choose(card)
     }
-    
-
-    
 }

@@ -34,21 +34,20 @@ struct AspectVGrid<Item: Identifiable, ItemView: View>: View {
         }
     }
     
-    
-func gridItemWidthThatFits(count: Int, size: CGSize, atAspectRatio aspectRatio: CGFloat) -> CGFloat {
-    let count = CGFloat(count)
-    var columnCount = 1.0
+    func gridItemWidthThatFits(count: Int, size: CGSize, atAspectRatio aspectRatio: CGFloat) -> CGFloat {
+        let count = CGFloat(count)
+        var columnCount = 1.0
         
-    repeat {
+        repeat {
             let width = size.width / columnCount
             let height = width / aspectRatio
             
             let rowCount = (count/columnCount).rounded(.up)
-        if rowCount * height < size.height {
-            return (size.width / columnCount).rounded(.down)
-        }
+            if rowCount * height < size.height {
+                return (size.width / columnCount).rounded(.down)
+            }
             
-        columnCount += 1
+            columnCount += 1
             
         } while columnCount < count
         
