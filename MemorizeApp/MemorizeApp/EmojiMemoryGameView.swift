@@ -11,50 +11,33 @@
 
 import SwiftUI
 
-struct EmojiMemoryGameView: View { // ContentView "behaves like a" View
-   
-   @ObservedObject var viewModel: EmojiMemoryGame  // Don't call it viewModel. Only for instruction
+struct EmojiMemoryGameView: View {
+    @ObservedObject var viewModel: EmojiMemoryGame
+    private let aspectRatio: CGFloat = 2/3
+    private let spacing: CGFloat = 4
     
-    var body: some View { // Computed Property - Lego analogy
+    var body: some View {
         VStack {
-             cards
+            cards
                 .foregroundColor(viewModel.color)
-                .animation(.default, value: viewModel.cards)
+                .animation(.default, value: viewModel.cards )
             Button("Shuffle") {
                 viewModel.shuffle()
             }
-            .padding()
         }
+        .padding()
     }
- 
-private var cards: some View {
-        AspectVGrid(viewModel.cards, aspectRatio: 2/3) { card in
+    
+    private var cards: some View {
+        AspectVGrid(viewModel.cards, aspectRatio: aspectRatio) { card in
             CardView(card)
-                .padding(4)
+                .padding(spacing)
                 .onTapGesture {
                     viewModel.choose(card)
                 }
         }
-        .foregroundColor(.orange)
-        
     }
 }
-
-// @ViewBuilder
-/*   var cards: some View {
-     LazyVGrid(columns: [GridItem(.adaptive(minimum: 85), spacing: 0)], spacing: 0) { //id: \.self -> Needs card to be hashable
-         ForEach(viewModel.cards) { card in
-             CardView(card)
-                 .aspectRatio(2/3, contentMode: .fit)
-                 .padding(4)
-                 .onTapGesture {
-                     viewModel.choose(card)
-                 }
-         }
-     }
-     .foregroundColor(Color.orange)
-     .padding()
- } */
 
 #Preview {
     EmojiMemoryGameView(viewModel: EmojiMemoryGame())
