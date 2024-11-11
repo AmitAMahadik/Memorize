@@ -33,7 +33,7 @@ struct EmojiMemoryGameView: View {
                 deck
                     .foregroundStyle(viewModel.color)
                 Spacer()
-                shuffle
+               // shuffle
             }
             .font(.largeTitle)
         }
