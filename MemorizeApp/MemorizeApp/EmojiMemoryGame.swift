@@ -25,7 +25,7 @@ class EmojiMemoryGame: ObservableObject {
        }
     }
     
-    @Published private var model = createMemoryGame()
+    @Published private var model = createMemoryGame() // Don't call it model. Only for instruction.
                                     
     var cards: Array<Card> {
         model.cards
@@ -33,6 +33,10 @@ class EmojiMemoryGame: ObservableObject {
     
     var color: Color {
         .orange
+    }
+    
+    var score: Int {
+        model.score
     }
     
     // MARK: - Intents
